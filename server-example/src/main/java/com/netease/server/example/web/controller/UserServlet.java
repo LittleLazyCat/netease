@@ -24,22 +24,22 @@ public class UserServlet extends HttpServlet {
 	private static Logger logger = Logger.getLogger(UserServlet.class);
 
 	@Override
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		process(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		logger.info("UserServlet post method is invoked.");
 		response.setContentType("text/html;charset=UTF-8");
 		process(request, response);
 	}
 
-	protected void process(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void process(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		RequestDispatcher dispatcher = null;
 		String userName = request.getParameter("userName");
 		String userPassword = request.getParameter("userPassword");
@@ -47,15 +47,16 @@ public class UserServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String psw = (String) session.getAttribute("psw");
 
-//		if (psw != null) {
-//			System.out.println("second login: " + psw);
-//		}
+		// if (psw != null) {
+		// System.out.println("second login: " + psw);
+		// }
 
 		session.setAttribute("userPsw", userPassword);
 
 		Cookie userNameCookie = new Cookie("userName", userName);
 
-		userNameCookie.setMaxAge(10 * 60);
+		// 设置cookie存在30分钟
+		userNameCookie.setMaxAge(30 * 60);
 
 		response.addCookie(userNameCookie);
 
