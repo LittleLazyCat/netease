@@ -45,13 +45,16 @@ public class UserServlet extends HttpServlet {
 		String userPassword = request.getParameter("userPassword");
 
 		HttpSession session = request.getSession();
-		String psw = (String) session.getAttribute("psw");
-
-		// if (psw != null) {
-		// System.out.println("second login: " + psw);
-		// }
-
-		session.setAttribute("userPsw", userPassword);
+		String psw = (String) session.getAttribute("userPsw");
+		// 判断用户是否为第二次登录
+		if (psw != null) {
+			session.invalidate();
+		}
+		else
+		{
+			session.setAttribute("userPsw", userPassword);
+		}
+		
 
 		Cookie userNameCookie = new Cookie("userName", userName);
 
