@@ -54,29 +54,28 @@ public class UserServlet extends HttpServlet {
 		{
 			session.setAttribute("userPsw", userPassword);
 		}
-		
-
+		 
 		Cookie userNameCookie = new Cookie("userName", userName);
-
 		// 设置cookie存在30分钟
 		userNameCookie.setMaxAge(30 * 60);
-
 		response.addCookie(userNameCookie);
-
+		
+		//用于暂时存储cookie中的用户名
+		String tempName = "";
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("userName")) {
-					userName = cookie.getValue();
+				if ("userName".equals(cookie.getName())) {
+					tempName = cookie.getValue();
 				}
-				if (cookie.getName().equals("pwd")) {
-					userPassword = cookie.getValue();
-				}
+				
 			}
 		}
-
+		
+		
+		
 		try {
-			if (userName.equals("123") && userPassword.equals("123")) {
+			if (userName.equals(tempName)) {
 				PrintWriter writer = response.getWriter();
 				writer.println("<html>");
 				writer.println("<head><title>用户中心</title></head>");
@@ -86,7 +85,7 @@ public class UserServlet extends HttpServlet {
 				writer.println("</body>");
 				writer.println("</html>");
 				writer.close();
-			} else {
+			} else if(userName == ""){
 				dispatcher = request.getRequestDispatcher("/error.html");
 				dispatcher.forward(request, response);
 			}
