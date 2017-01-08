@@ -45,35 +45,27 @@ public class UserServlet extends HttpServlet {
 		String userPassword = request.getParameter("userPassword");
 
 		HttpSession session = request.getSession();
-		String psw = (String) session.getAttribute("userPsw");
-		// 判断用户是否为第二次登录
-		if (psw != null) {
-			session.invalidate();
-		}
-		else
-		{
-			session.setAttribute("userPsw", userPassword);
-		}
-		 
+		session.setAttribute("userPsw", userPassword);
+		//String psw = (String) session.getAttribute("userPsw");
+
 		Cookie userNameCookie = new Cookie("userName", userName);
 		// 设置cookie存在30分钟
 		userNameCookie.setMaxAge(30 * 60);
 		response.addCookie(userNameCookie);
-		
-		//用于暂时存储cookie中的用户名
+
+		// 用于暂时存储cookie中的用户名
 		String tempName = "";
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
+				// 判断用户是否为第二次登录,以及获取cookie中的userName的值
 				if ("userName".equals(cookie.getName())) {
 					tempName = cookie.getValue();
+					session.invalidate();
 				}
-				
 			}
 		}
-		
-		
-		
+
 		try {
 			if (userName.equals(tempName)) {
 				PrintWriter writer = response.getWriter();
@@ -85,7 +77,7 @@ public class UserServlet extends HttpServlet {
 				writer.println("</body>");
 				writer.println("</html>");
 				writer.close();
-			} else if(userName == ""){
+			} else if (userName == "") {
 				dispatcher = request.getRequestDispatcher("/error.html");
 				dispatcher.forward(request, response);
 			}
