@@ -46,7 +46,6 @@ public class UserServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		session.setAttribute("userPsw", userPassword);
-		//String psw = (String) session.getAttribute("userPsw");
 
 		Cookie userNameCookie = new Cookie("userName", userName);
 		// 设置cookie存在30分钟
@@ -67,17 +66,11 @@ public class UserServlet extends HttpServlet {
 		}
 
 		try {
-			if (userName.equals(tempName)) {
-				PrintWriter writer = response.getWriter();
-				writer.println("<html>");
-				writer.println("<head><title>用户中心</title></head>");
-				writer.println("<body>");
-				writer.println("<p>用户名：" + userName + "</p>");
-				writer.println("<p>用户密码：" + userPassword + "</p>");
-				writer.println("</body>");
-				writer.println("</html>");
-				writer.close();
-			} else if (userName == "") {
+			 if (userName != tempName) {
+				UserServlet.sendToClient(userName, userPassword, response);
+			} else if(userName == tempName){
+				UserServlet.sendToClient(tempName, userPassword, response);
+			}else {
 				dispatcher = request.getRequestDispatcher("/error.html");
 				dispatcher.forward(request, response);
 			}
@@ -87,5 +80,17 @@ public class UserServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 
+	}
+
+	public static void sendToClient(String name, String psw, HttpServletResponse response) throws IOException {
+		PrintWriter writer = response.getWriter();
+		writer.println("<html>");
+		writer.println("<head><title>用户中心</title></head>");
+		writer.println("<body>");
+		writer.println("<p>用户名：" + name + "</p>");
+		writer.println("<p>用户密码：" + psw + "</p>");
+		writer.println("</body>");
+		writer.println("</html>");
+		writer.close();
 	}
 }
