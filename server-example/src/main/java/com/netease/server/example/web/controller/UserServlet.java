@@ -45,22 +45,19 @@ public class UserServlet extends HttpServlet {
 		String userPassword = request.getParameter("userPassword");
 
 		HttpSession session = request.getSession();
-		String name = (String) session.getAttribute("userName");
+		String psw = (String) session.getAttribute("psw");
 
-		if (name != null) {
-			System.out.println("second login: " + name);
-		}
+//		if (psw != null) {
+//			System.out.println("second login: " + psw);
+//		}
 
-		session.setAttribute("userName", userName);
+		session.setAttribute("userPsw", userPassword);
 
 		Cookie userNameCookie = new Cookie("userName", userName);
-		Cookie pwdCookie = new Cookie("pwd", userPassword);
 
 		userNameCookie.setMaxAge(10 * 60);
-		pwdCookie.setMaxAge(10 * 60);
 
 		response.addCookie(userNameCookie);
-		response.addCookie(pwdCookie);
 
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {

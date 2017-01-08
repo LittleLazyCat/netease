@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	id="WebApp_ID" version="3.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+
 
 	<welcome-file-list>
 		<welcome-file>
@@ -11,9 +9,10 @@
 	</welcome-file-list>
 
 	<servlet>
-		<load-on-startup>1</load-on-startup>
+		
 		<servlet-name>TestServlet</servlet-name>
 		<servlet-class>com.netease.server.example.web.controller.TestServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>TestServlet</servlet-name>
@@ -22,9 +21,10 @@
 
 
 	<servlet>
-		<load-on-startup>2</load-on-startup>
+		
 		<servlet-name>TestHelloServlet</servlet-name>
 		<servlet-class>com.netease.server.example.web.controller.TestHelloServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
@@ -69,6 +69,9 @@
 
 	<!-- servletconfig servlet -->
 	<servlet>
+		
+		<servlet-name>ServletConfigServlet</servlet-name>
+		<servlet-class>com.netease.server.example.web.controller.ServletConfigServlet</servlet-class>
 		<init-param>
 			<param-name>data1</param-name>
 			<param-value>value1</param-value>
@@ -77,8 +80,6 @@
 			<param-name>data2</param-name>
 			<param-value>value2</param-value>
 		</init-param>
-		<servlet-name>ServletConfigServlet</servlet-name>
-		<servlet-class>com.netease.server.example.web.controller.ServletConfigServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ServletConfigServlet</servlet-name>
